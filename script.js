@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('sidebar');
   const mainImage = document.getElementById('main-image');
 
-  // Gambar default
   const images = [
     'images/Artboard 1.png',
     'images/Artboard 2.png',
@@ -20,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let index = 0;
 
   function showImage(i) {
+    mainImage.style.transition = 'opacity 0.2s ease';
     mainImage.style.opacity = 0;
     setTimeout(() => {
       mainImage.src = images[i];
@@ -27,12 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 200);
   }
 
-  // Toggle sidebar
   toggleButton.addEventListener('click', () => {
     sidebar.classList.toggle('open');
   });
 
-  // Klik link di sidebar
   document.querySelectorAll('.sidebar a').forEach((link, i) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -45,29 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
       sidebar.classList.remove('open');
 
-      // Update index (biar bisa swipe kalau nanti ditambah lagi)
       const filename = imageSrc.split('/').pop();
       index = images.findIndex(img => img.includes(filename));
     });
   });
 
-  // Swipe gesture
+  // SWIPE LEFT-RIGHT ONLY
   let xStart = null;
+  let yStart = null;
+
   function touchStart(e) {
     xStart = e.touches[0].clientX;
+    yStart = e.touches[0].clientY;
   }
+
   function touchEnd(e) {
-    if (!xStart) return;
-    const diff = xStart - e.changedTouches[0].clientX;
-    if (diff > 20) index = (index + 1) % images.length;
-    if (diff < -20) index = (index - 1 + images.length) % images.length;
-    showImage(index);
+    if (!xStart || !yStart) return;
+
+    const xEnd = e.changedTouches[0].clientX;
+    const yEnd = e.changedTouches[0].clientY;
+
+    const xDiff = xStart - xEnd;
+    const yDiff = yStart - yEnd;
+
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 20) {
+        index = (index + 1) % images.length;
+        showImage(index);
+      } else if (xDiff < -20) {
+        index = (index - 1 + images.length) % images.length;
+        showImage(index);
+      }
+    }
+
     xStart = null;
+    yStart = null;
   }
 
   window.addEventListener('touchstart', touchStart, false);
   window.addEventListener('touchend', touchEnd, false);
 
-  // Tampilkan gambar awal
   showImage(index);
 });
