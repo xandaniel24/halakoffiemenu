@@ -1,115 +1,89 @@
-/* ===== BASIC ===== */
-html, body {
+/* Reset dasar */
+body, html {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background: #111;
   height: 100%;
-  width: 100%;
   overflow: hidden;
-  touch-action: none;
+  font-family: sans-serif;
+  background-color: #000;
 }
 
-body {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-/* ===== FULLSCREEN BUTTON ===== */
-#fsBtn {
+/* Tombol toggle sidebar */
+.toggleSidebarBtn {
   position: absolute;
-  z-index: 9999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
   font-size: 24px;
-  padding: 20px 40px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.7);
   border: none;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.3);
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-/* ===== SIDEBAR ===== */
+/* Sidebar */
 .sidebar {
-  position: fixed;
-  top: 0;
+  position: absolute;
   left: 0;
+  top: 0;
+  bottom: 0;
   width: 220px;
-  max-width: 60vw;
-  height: 100%;
-  background: #f5fdf3;
-  padding: 60px 20px 20px;
+  background-color: #fff;
+  padding: 60px 10px 10px;
+  overflow-y: auto;
   transform: translateX(-100%);
-  opacity: 0;
-  backdrop-filter: blur(6px);
-  transition: transform .35s ease, opacity .35s ease;
-  pointer-events: none;
-  z-index: 9998;
+  transition: transform 0.3s ease;
+  z-index: 999;
 }
 
 .sidebar.show {
   transform: translateX(0);
-  opacity: 1;
-  pointer-events: auto;
-  backdrop-filter: none;
 }
 
-/* Link dalam sidebar */
 .sidebar a {
-  touch-action: manipulation;
   display: block;
-  color: #0b4f2f;
+  padding: 12px;
+  margin-bottom: 5px;
   text-decoration: none;
-  padding: 12px 10px;
+  color: #333;
+  background-color: #eee;
   border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
 .sidebar a:hover {
-  background: #333;
+  background-color: #ddd;
 }
 
-/* ===== TOGGLE BUTTON ===== */
-.toggleSidebarBtn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  font-size: 30px;
-  color: #ffffff;
-  background: #0b4f2f;
-  border: none;
-  z-index: 9999;
-  cursor: pointer;
-  display: none;
-}
-
-/* ===== SLIDESHOW IMAGE ===== */
+/* Gambar */
 #slideshow {
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
   position: absolute;
   top: 0;
   left: 0;
-  transition: opacity 0.5s ease;
-  opacity: 1;
-  z-index: 1;
-  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  transition: opacity 0.3s;
 }
 
-/* ===== LANDSCAPE FIX ===== */
-@media screen and (orientation: landscape) {
+/* Tombol fullscreen dihilangkan */
+#fsBtn {
+  display: none;
+}
+
+/* Responsive tweaks: Landscape tablet */
+@media (orientation: landscape) {
   #slideshow {
-    width: 100vw;
-    height: 100vh;
+    object-fit: contain;
   }
 
   .sidebar {
-    max-width: 45vw;
-    width: min(220px, 45vw);
+    width: 220px;
+  }
+
+  .sidebar.show + #slideshow {
+    margin-left: 220px;
+    width: calc(100vw - 220px);
   }
 }
