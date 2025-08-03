@@ -58,14 +58,15 @@ body, html {
 
 /* Gambar */
 #slideshow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: auto;
   object-fit: contain;
-  transition: opacity 0.3s;
 }
+
 
 /* Tombol fullscreen dihilangkan */
 #fsBtn {
@@ -87,3 +88,4 @@ body, html {
     width: calc(100vw - 220px);
   }
 }
+
