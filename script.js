@@ -1,8 +1,8 @@
 /* ===== SETUP ===== */
 const images = [
-  'Artboard 1.png','Artboard 2.png','Artboard 3.png','Artboard 4.png',
-  'Artboard 5.png','Artboard 6.png','Artboard 7.png','Artboard 8.png',
-  'Artboard 9.png','Artboard 10.png'
+  'images/Artboard 1.png','images/Artboard 2.png','images/Artboard 3.png','images/Artboard 4.png',
+  'images/Artboard 5.png','images/Artboard 6.png','images/Artboard 7.png','images/Artboard 8.png',
+  'images/Artboard 9.png','images/Artboard 10.png'
 ];
 
 let index = 0;
@@ -33,11 +33,13 @@ document.querySelectorAll('.sidebar a').forEach((link, i) => {
     }, 200);
 
     sidebar.classList.remove('show');
-    
-    // ⬇ Update index biar gak balik ke Artboard 1 lagi
-    index = images.indexOf(imgSrc);
+
+    // ✅ Update index aman berdasarkan nama file
+    const filename = imgSrc.split('/').pop();
+    index = images.findIndex(imgPath => imgPath.split('/').pop() === filename);
   });
 });
+
 /* ===== SWIPE HANDLER ===== */
 let xStart = null;
 function touchStart(e) {
@@ -73,3 +75,4 @@ fsBtn.addEventListener('click', () => {
 toggle.addEventListener('click', () => {
   sidebar.classList.toggle('show');
 });
+
